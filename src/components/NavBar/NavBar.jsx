@@ -15,10 +15,10 @@ import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import useAuth from '../Hooks/useAuth';
 import RegisterForm from 'components/Modal/Modal';
 import { createPortal } from 'react-dom';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+// import Dialog from '@mui/material/Dialog';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
 
 function ResponsiveAppBar() {
   const user = useAuth();
@@ -173,28 +173,28 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
       {isModalOpen && (
-        <Dialog
-          open={isModalOpen}
-          // onClose={handleClose}
-          PaperProps={{
-            component: 'form',
-            onSubmit: event => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              const email = formJson.email;
-              console.log(email);
-            },
-          }}
-        >
-          <DialogTitle>Register Form</DialogTitle>
-          <DialogContent>
-            <RegisterForm />
-          </DialogContent>
-          <DialogActions>
-            <Button type="submit">Register</Button>
-          </DialogActions>
-        </Dialog>
+        // <Dialog
+        //   open={isModalOpen}
+        //   // onClose={handleClose}
+        //   PaperProps={{
+        //     component: 'form',
+        //     onSubmit: event => {
+        //       event.preventDefault();
+        //       const formData = new FormData(event.currentTarget);
+        //       const formJson = Object.fromEntries(formData.entries());
+        //       const email = formJson.email;
+        //       console.log(email);
+        //     },
+        //   }}
+        // >
+        //   <DialogTitle>Register Form</DialogTitle>
+        //   <DialogContent>
+        <RegisterForm isModalOpen />
+        //   </DialogContent>
+        //   <DialogActions>
+        //     <Button type="submit">Register</Button>
+        //   </DialogActions>
+        // </Dialog>
       )}
     </AppBar>
   );
