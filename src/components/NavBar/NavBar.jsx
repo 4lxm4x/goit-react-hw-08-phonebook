@@ -42,9 +42,13 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = e => {
+    // console.dir('current', e.currentTarget);
+    console.dir(e.currentTarget);
     setAnchorElUser(null);
-    setModalOpen(true);
+    if (e.currentTarget.id === 'Login') {
+      setModalOpen(true);
+    }
   };
 
   return (
@@ -164,7 +168,11 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map(setting => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  id={setting}
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
