@@ -1,0 +1,8 @@
+.modal {
+  height: 30%;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+}

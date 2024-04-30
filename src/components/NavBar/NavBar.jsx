@@ -12,11 +12,22 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
-
-const pages = ['Contacts', 'Add new contact'];
-const settings = ['Account', 'Logout'];
+import useAuth from '../Hooks/useAuth';
+import RegisterForm from 'components/Modal/Modal';
+import { createPortal } from 'react-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 
 function ResponsiveAppBar() {
+  const user = useAuth();
+  console.log('🚀 ~ ResponsiveAppBar ~ user:', user.register.isLoggedIn);
+  const pages = ['Contacts', 'Add new contact'];
+  const [isModalOpen, setModalOpen] = React.useState(false);
+  const settings = user.register.isLoggedIn
+    ? ['Account', 'Logout']
+    : ['Account', 'Login'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -33,6 +44,7 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    setModalOpen(true);
   };
 
   return (
@@ -160,6 +172,30 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
+      {isModalOpen && (
+        <Dialog
+          open={isModalOpen}
+          // onClose={handleClose}
+          PaperProps={{
+            component: 'form',
+            onSubmit: event => {
+              event.preventDefault();
+              const formData = new FormData(event.currentTarget);
+              const formJson = Object.fromEntries(formData.entries());
+              const email = formJson.email;
+              console.log(email);
+            },
+          }}
+        >
+          <DialogTitle>Register Form</DialogTitle>
+          <DialogContent>
+            <RegisterForm />
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit">Register</Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </AppBar>
   );
 }

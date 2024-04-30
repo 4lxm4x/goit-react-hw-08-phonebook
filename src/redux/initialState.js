@@ -4,5 +4,10 @@ export const initialState = {
     isLoading: false,
     error: null,
   },
+  user: {
+    isLoggedIn: false,
+    name: '',
+    email: '',
+  },
   filter: '',
 };

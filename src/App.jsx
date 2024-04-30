@@ -2,6 +2,7 @@ import ContactForm from 'components/ContactForm/ContactForm';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from './components/Filter/Filter';
 import ResponsiveAppBar from './components/NavBar/NavBar';
+import { Portal } from '@mui/base/Portal';
 
 import './App.css';
 

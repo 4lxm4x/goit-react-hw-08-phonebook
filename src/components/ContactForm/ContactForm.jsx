@@ -10,13 +10,13 @@ export default function ContactForm() {
   const contacts = useSelector(state => state.contacts.items);
   const namesInState = contacts.map(contact => contact.name);
 
-  useEffect(
-    () =>
-      async function fetchData() {
-        dispatch(fetchContacts());
-      },
-    [dispatch]
-  );
+  // useEffect(
+  //   () =>
+  //     async function fetchData() {
+  //       dispatch(fetchContacts());
+  //     },
+  //   [dispatch]
+  // );
 
   const onHandleFormSubmit = e => {
     e.preventDefault();
