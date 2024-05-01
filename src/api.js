@@ -29,6 +29,7 @@ export async function register(credentials, thunkAPI) {
     const { data } = await axios.post('/users/signup', credentials);
     console.log('🚀 ~ register ~ data :', data);
     setToken(data.token);
+    return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }

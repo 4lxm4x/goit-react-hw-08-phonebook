@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import useAuth from '../Hooks/useAuth';
 import RegisterForm from 'components/Modal/Modal';
-import { createPortal } from 'react-dom';
+// import { createPortal } from 'react-dom';
 // import Dialog from '@mui/material/Dialog';
 // import DialogTitle from '@mui/material/DialogTitle';
 // import DialogActions from '@mui/material/DialogActions';
@@ -22,12 +22,10 @@ import { createPortal } from 'react-dom';
 
 function ResponsiveAppBar() {
   const user = useAuth();
-  console.log('🚀 ~ ResponsiveAppBar ~ user:', user.register.isLoggedIn);
+  // console.log('🚀 ~ ResponsiveAppBar ~ user:', user.register.isLoggedIn);
   const pages = ['Contacts', 'Add new contact'];
   const [isModalOpen, setModalOpen] = React.useState(false);
-  const settings = user.register.isLoggedIn
-    ? ['Account', 'Logout']
-    : ['Account', 'Login'];
+  const settings = user ? ['Account', 'Logout'] : ['Account', 'Login'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,11 +42,16 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = e => {
     // console.dir('current', e.currentTarget);
-    console.dir(e.currentTarget);
     setAnchorElUser(null);
     if (e.currentTarget.id === 'Login') {
+      console.log(isModalOpen);
       setModalOpen(true);
+      console.log(isModalOpen);
     }
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -197,7 +200,7 @@ function ResponsiveAppBar() {
         // >
         //   <DialogTitle>Register Form</DialogTitle>
         //   <DialogContent>
-        <RegisterForm isModalOpen />
+        <RegisterForm close={closeModal} />
         //   </DialogContent>
         //   <DialogActions>
         //     <Button type="submit">Register</Button>

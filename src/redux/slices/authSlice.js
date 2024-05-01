@@ -6,11 +6,18 @@ const registerSlice = createSlice({
   name: 'register',
   initialState: initialState.user,
   extraReducers: builder => {
-    builder.addCase(registerUser.fulfilled, (state, action) => {
-      //   state.isLoggedIn = true;
-      //   state.name = action.payload.name;
-      //   state.email = action.payload.email;
-    });
+    builder
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoggedIn = true;
+        state.name = action.payload.user.name;
+        state.email = action.payload.user.email;
+      })
+      .addCase(registerUser.pending, state => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        return { ...state, isLoading: false, error: action.payload };
+      });
   },
 });
 
