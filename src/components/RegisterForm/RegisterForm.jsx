@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // import { Modal } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import './Modal.css';
+import './RegisterForm.css';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,14 +11,16 @@ import DialogContent from '@mui/material/DialogContent';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/operations/operations';
 import useAuth from 'components/Hooks/useAuth';
+import { modalOpen } from '../../redux/slices/modalSlice';
 
-export default function RegisterForm(onClose) {
-  const [open, setOpen] = useState();
+export default function RegisterForm() {
+  // const [open, setOpen] = useState();
   const user = useAuth();
-  useEffect(() => {
-    user.isLoggedIn ? setOpen(false) : setOpen(true);
-  }, [user.isLoggedIn]);
+  // useEffect(() => {
+  //   user.isLoggedIn ? setOpen(false) : setOpen(true);
+  // }, [user.isLoggedIn]);
   // user.isLoggedIn ? setOpen(false) : setOpen(true);
+
   const dispatch = useDispatch();
   // const handleClose = () => {
   //   setOpen(false);
@@ -26,14 +28,24 @@ export default function RegisterForm(onClose) {
   // };
 
   const handleClose = () => {
-    setOpen(false);
+    // setOpen(false);
+    // setOpen(false);
+    console.log('🚀 ~ handleClose ~ handleClose:', handleClose);
+    dispatch(modalOpen(false));
+    // sendClosed = false;
+
     // return true;
   };
 
+  // const handleOpen = isOpen => {
+  //   console.log('🚀 ~ handleOpen ~ handleOpen:', handleOpen);
+  //   return isOpen;
+  // };
+
   return (
     <Dialog
-      open={open}
-      onClose={onClose}
+      open={true}
+      onClose={handleClose}
       PaperProps={{
         component: 'form',
         onSubmit: event => {

@@ -10,4 +10,5 @@ export const initialState = {
     email: '',
   },
   filter: '',
+  isModalOpen: false,
 };

@@ -11,13 +11,13 @@ import './App.css';
 
 export default function App() {
   const dispatch = useDispatch();
-  useEffect(
-    () =>
-      async function fetchData() {
-        dispatch(fetchContacts());
-      },
-    [dispatch]
-  );
+  // useEffect(
+  //   () =>
+  //     async function fetchData() {
+  //       dispatch(fetchContacts());
+  //     },
+  //   [dispatch]
+  // );
   return (
     <>
       <ResponsiveAppBar />
