@@ -25,7 +25,9 @@ function ResponsiveAppBar() {
   // console.log('🚀 ~ ResponsiveAppBar ~ user:', user.register.isLoggedIn);
   const pages = ['Contacts', 'Add new contact'];
   const [isModalOpen, setModalOpen] = React.useState(false);
-  const settings = user ? ['Account', 'Logout'] : ['Account', 'Login'];
+  const settings = user.isLoggedIn
+    ? ['Account', 'Logout']
+    : ['Account', 'Login', 'Register'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -43,16 +45,15 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = e => {
     // console.dir('current', e.currentTarget);
     setAnchorElUser(null);
-    if (e.currentTarget.id === 'Login') {
-      console.log(isModalOpen);
+    if (e.currentTarget.id === 'Register' || 'Login') {
       setModalOpen(true);
-      console.log(isModalOpen);
     }
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   console.log('modalclosed');
+  //   setModalOpen(false);
+  // };
 
   return (
     <AppBar position="static">
@@ -183,30 +184,7 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
-      {isModalOpen && (
-        // <Dialog
-        //   open={isModalOpen}
-        //   // onClose={handleClose}
-        //   PaperProps={{
-        //     component: 'form',
-        //     onSubmit: event => {
-        //       event.preventDefault();
-        //       const formData = new FormData(event.currentTarget);
-        //       const formJson = Object.fromEntries(formData.entries());
-        //       const email = formJson.email;
-        //       console.log(email);
-        //     },
-        //   }}
-        // >
-        //   <DialogTitle>Register Form</DialogTitle>
-        //   <DialogContent>
-        <RegisterForm close={closeModal} />
-        //   </DialogContent>
-        //   <DialogActions>
-        //     <Button type="submit">Register</Button>
-        //   </DialogActions>
-        // </Dialog>
-      )}
+      {isModalOpen && <RegisterForm />}
     </AppBar>
   );
 }

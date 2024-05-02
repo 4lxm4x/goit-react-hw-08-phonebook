@@ -1,4 +1,4 @@
-1. setup new api server
+1. setup new api server +
 2. setup register api
 3. setup register slice 3a. review and remake design of app
 4. setup register button

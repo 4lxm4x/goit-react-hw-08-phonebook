@@ -1,5 +1,5 @@
 import { FormControl } from '@mui/base/FormControl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { Modal } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -10,19 +10,30 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/operations/operations';
+import useAuth from 'components/Hooks/useAuth';
 
-export default function RegisterForm(close) {
-  // const [open, setOpen] = useState(true);
+export default function RegisterForm(onClose) {
+  const [open, setOpen] = useState();
+  const user = useAuth();
+  useEffect(() => {
+    user.isLoggedIn ? setOpen(false) : setOpen(true);
+  }, [user.isLoggedIn]);
+  // user.isLoggedIn ? setOpen(false) : setOpen(true);
   const dispatch = useDispatch();
   // const handleClose = () => {
   //   setOpen(false);
   //   close(false);
   // };
 
+  const handleClose = () => {
+    setOpen(false);
+    // return true;
+  };
+
   return (
     <Dialog
-      open={true}
-      // onClose={handleClose}
+      open={open}
+      onClose={onClose}
       PaperProps={{
         component: 'form',
         onSubmit: event => {
@@ -83,7 +94,7 @@ export default function RegisterForm(close) {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button type="submit" onClick={close}>
+        <Button type="submit" onClick={handleClose}>
           Register
         </Button>
       </DialogActions>

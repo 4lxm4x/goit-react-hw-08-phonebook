@@ -49,3 +49,15 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+export const loginUser = createAsyncThunk(
+  'register',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await API.register(credentials);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
