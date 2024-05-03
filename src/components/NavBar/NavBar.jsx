@@ -13,10 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import useAuth from '../Hooks/useAuth';
-import RegisterForm from 'components/RegisterForm/RegisterForm';
-import { useDispatch, useSelector } from 'react-redux';
-import { modalOpen } from '../../redux/slices/modalSlice';
-
+import RegisterForm from 'components/Modal/Modal';
 // import { createPortal } from 'react-dom';
 // import Dialog from '@mui/material/Dialog';
 // import DialogTitle from '@mui/material/DialogTitle';
@@ -25,13 +22,11 @@ import { modalOpen } from '../../redux/slices/modalSlice';
 
 function ResponsiveAppBar() {
   const user = useAuth();
-  const isModalOpen = useSelector(state => state.modal);
-  console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
-
-  const dispatch = useDispatch();
   // console.log('🚀 ~ ResponsiveAppBar ~ user:', user.register.isLoggedIn);
   const pages = ['Contacts', 'Add new contact'];
-  // const [isModalOpen, setModalOpen] = React.useState(false);
+  const [isModalOpen, setModalOpen] = React.useState(false);
+  console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
+
   const settings = user.isLoggedIn
     ? ['Account', 'Logout']
     : ['Account', 'Login', 'Register'];
@@ -52,15 +47,22 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = e => {
     // console.dir('current', e.currentTarget);
     setAnchorElUser(null);
-    if (e.currentTarget.id === 'Register' || 'Login') {
-      dispatch(modalOpen(true));
-    }
   };
 
-  // const closeModal = haha => {
-  //   console.log('modalClosed', haha);
-  //   setModalOpen(false);
-  // };
+  const handleModalClose = state => {
+    console.log('modalIsClosed');
+    setModalOpen(state);
+  };
+
+  const handleMenuItemClick = event => {
+    if (
+      event.currentTarget.id === 'Register' ||
+      event.currentTarget.id === 'Login'
+    ) {
+      setModalOpen(event.currentTarget.id);
+      handleCloseUserMenu();
+    }
+  };
 
   return (
     <AppBar position="static">
@@ -182,7 +184,7 @@ function ResponsiveAppBar() {
                 <MenuItem
                   id={setting}
                   key={setting}
-                  onClick={handleCloseUserMenu}
+                  onClick={handleMenuItemClick}
                 >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
@@ -191,7 +193,12 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
-      {isModalOpen && <RegisterForm />}
+      {
+        <RegisterForm
+          handleModalOpen={isModalOpen}
+          handleModalClose={handleModalClose}
+        />
+      }
     </AppBar>
   );
 }
