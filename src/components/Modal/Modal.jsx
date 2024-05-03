@@ -1,6 +1,5 @@
 import { FormControl } from '@mui/base/FormControl';
 import { useEffect, useState } from 'react';
-// import { Modal } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './Modal.css';
@@ -10,7 +9,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/operations/operations';
-import useAuth from 'components/Hooks/useAuth';
+import { loginUser } from '../../redux/operations/operations';
+// import useAuth from 'components/Hooks/useAuth';
 
 export default function RegisterForm({ handleModalOpen, handleModalClose }) {
   const [open, setOpen] = useState(false);
@@ -25,10 +25,11 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
       setOpen(true);
   }, [handleModalOpen]);
 
-  const user = useAuth();
+  // const user = useAuth();
   // useEffect(() => {
   //   user.isLoggedIn ? setOpen(false) : setOpen(true);
   // }, [user.isLoggedIn]);
+
   const dispatch = useDispatch();
 
   return (
@@ -42,7 +43,9 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
           const formData = new FormData(event.currentTarget);
 
           const userData = Object.fromEntries(formData.entries());
-          dispatch(registerUser(userData));
+          handleModalOpen === 'Login'
+            ? dispatch(loginUser(userData))
+            : dispatch(registerUser(userData));
           handleClose();
         },
       }}

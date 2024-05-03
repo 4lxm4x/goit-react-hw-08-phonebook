@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import useAuth from '../Hooks/useAuth';
 import RegisterForm from 'components/Modal/Modal';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/slices/authSlice';
 // import { createPortal } from 'react-dom';
 // import Dialog from '@mui/material/Dialog';
 // import DialogTitle from '@mui/material/DialogTitle';
@@ -21,11 +23,12 @@ import RegisterForm from 'components/Modal/Modal';
 // import DialogContent from '@mui/material/DialogContent';
 
 function ResponsiveAppBar() {
+  const dispatch = useDispatch();
   const user = useAuth();
-  // console.log('🚀 ~ ResponsiveAppBar ~ user:', user.register.isLoggedIn);
+  // console.log('🚀 ~ ResponsiveAppBar ~ user:', user);
   const pages = ['Contacts', 'Add new contact'];
   const [isModalOpen, setModalOpen] = React.useState(false);
-  console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
+  // console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
 
   const settings = user.isLoggedIn
     ? ['Account', 'Logout']
@@ -60,6 +63,10 @@ function ResponsiveAppBar() {
       event.currentTarget.id === 'Login'
     ) {
       setModalOpen(event.currentTarget.id);
+      handleCloseUserMenu();
+    }
+    if (event.currentTarget.id === 'Logout') {
+      dispatch(logoutUser());
       handleCloseUserMenu();
     }
   };

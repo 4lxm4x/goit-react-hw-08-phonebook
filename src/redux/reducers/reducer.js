@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import { contactsReducer } from '../slices/contactsSlice';
 import { filterReducer } from '../slices/filterSlice';
-import { registerReducer } from '../slices/authSlice';
+import { authReducer } from '../slices/authSlice';
+// import { loginReducer } from '../slices/authSlice';
 export const reducer = combineReducers({
   contacts: contactsReducer,
   filter: filterReducer,
-  register: registerReducer,
+  auth: authReducer,
+  // login: loginReducer,
 });

@@ -35,4 +35,23 @@ export async function register(credentials, thunkAPI) {
   }
 }
 
-// export async function login(credentials) {}
+export async function login(credentials, thunkAPI) {
+  try {
+    const { data } = await axios.post('/users/login', credentials);
+    console.log('🚀 ~ login ~ data :', data);
+    setToken(data.token);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+
+export async function logout(thunkAPI) {
+  try {
+    unsetToken();
+    console.log(axios.defaults.headers.common['Authorization']);
+    return;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+}

@@ -4,15 +4,19 @@ import { fetchContacts } from '../../redux/operations/operations';
 import './Contacts.css';
 
 import { deleteContact } from '../../redux/operations/operations';
+import useAuth from '../../components/Hooks/useAuth';
 
 export default function Contacts() {
   const dispatch = useDispatch();
+  const user = useAuth();
   const contacts = useSelector(state => {
     return state.contacts.items;
   });
 
   const filter = useSelector(state => state.filter);
-
+  if (user.isLoggedIn) {
+    dispatch(fetchContacts());
+  }
   // useEffect(() => {
   //   dispatch(fetchContacts());
   // }, [dispatch]);
