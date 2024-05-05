@@ -4,6 +4,7 @@ export const initialState = {
     isLoading: false,
     error: null,
   },
+  token: '',
   user: {
     isLoggedIn: false,
     name: '',

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from '../initialState';
-import { registerUser } from '../operations/operations';
+import { registerUser, requestCurrentUser } from '../operations/operations';
 import { loginUser } from '../operations/operations';
 import * as API from '../../api';
 
@@ -40,29 +40,18 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         return { ...state, isLoading: false, error: action.payload };
+      })
+      .addCase(requestCurrentUser.pending, (state, action) => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(requestCurrentUser.fulfilled, (state, action) => {
+        state.isLoggedIn = true;
+        state.isLoading = false;
+        state.name = action.payload.user.name;
+        state.email = action.payload.user.email;
       });
   },
 });
-
-// const loginSlice = createSlice({
-//   name: 'login',
-//   initialState: initialState.user,
-//   extraReducers: builder => {
-//     builder
-//       .addCase(loginUser.fulfilled, (state, action) => {
-//         state.isLoggedIn = true;
-//         state.isLoading = false;
-//         state.name = action.payload.user.name;
-//         state.email = action.payload.user.email;
-//       })
-//       .addCase(loginUser.pending, state => {
-//         return { ...state, isLoading: true };
-//       })
-//       .addCase(loginUser.rejected, (state, action) => {
-//         return { ...state, isLoading: false, error: action.payload };
-//       });
-//   },
-// });
 
 export const authReducer = authSlice.reducer;
 export const { logoutUser } = authSlice.actions;

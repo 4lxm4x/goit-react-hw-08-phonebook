@@ -16,17 +16,12 @@ import useAuth from '../Hooks/useAuth';
 import RegisterForm from 'components/Modal/Modal';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../redux/slices/authSlice';
-// import { createPortal } from 'react-dom';
-// import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
 
 function ResponsiveAppBar() {
   const dispatch = useDispatch();
   const user = useAuth();
   // console.log('🚀 ~ ResponsiveAppBar ~ user:', user);
-  const pages = ['Contacts', 'Add new contact'];
+  const pages = ['Add new contact'];
   const [isModalOpen, setModalOpen] = React.useState(false);
   // console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
 

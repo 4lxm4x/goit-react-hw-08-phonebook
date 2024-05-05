@@ -62,4 +62,14 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// export const logoutUser =
+export const requestCurrentUser = createAsyncThunk(
+  'requestCurrentUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.requestCurrentUser();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

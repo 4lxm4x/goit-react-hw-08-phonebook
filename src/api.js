@@ -1,6 +1,6 @@
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import { initialState } from './redux/initialState';
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 const setToken = token => {
   axios.defaults.headers.common['Authorization'] = token;
@@ -49,9 +49,26 @@ export async function login(credentials, thunkAPI) {
 export async function logout(thunkAPI) {
   try {
     unsetToken();
-    console.log(axios.defaults.headers.common['Authorization']);
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
+  }
+}
+
+export async function requestCurrentUser(thunkAPI) {
+  try {
+    setToken(initialState.token);
+    const { data } = await axios.get('/users/current');
+
+    console.log(
+      '🚀 ~ requestCurrentUser ~ initialState.token:',
+      initialState.token
+    );
+
+    return data;
+  } catch (error) {
+    console.log('🚀 ~ requestCurrentUser ~ error:', error.message);
+
+    return thunkAPI.rejectWithValue(error.message);
   }
 }
