@@ -37,6 +37,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.name = action.payload.user.name;
         state.email = action.payload.user.email;
+        state.error = '';
       })
       .addCase(loginUser.pending, state => {
         return { ...state, isLoading: true };
@@ -54,6 +55,7 @@ const authSlice = createSlice({
 
         state.name = action.payload.name;
         state.email = action.payload.email;
+        state.error = '';
       })
       .addCase(requestCurrentUser.rejected, (state, action) => {
         return { ...state, isLoading: false, error: action.payload };
