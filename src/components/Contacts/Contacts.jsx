@@ -10,14 +10,18 @@ export default function Contacts() {
   const dispatch = useDispatch();
   const user = useAuth();
   const contacts = useSelector(state => {
+    console.log('🚀 ~ contacts ~ state:', state);
+
     return state.contacts.items;
   });
 
   const filter = useSelector(state => state.filter);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, []);
+    if (user.isLoggedIn) {
+      dispatch(fetchContacts());
+    }
+  }, [dispatch, user.isLoggedIn]);
 
   function onDelete(e) {
     dispatch(deleteContact(e.target.id));
@@ -32,7 +36,7 @@ export default function Contacts() {
       {filteredContacts.map(contact => {
         return (
           <li key={contact.id}>
-            {contact.name}: {contact.phone}
+            {contact.name}: {contact.number}
             <button className="deleteBtn" onClick={onDelete} id={contact.id}>
               Delete
             </button>

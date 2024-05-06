@@ -101,7 +101,11 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button type="submit">Register</Button>
+        {handleModalOpen === 'Register' ? (
+          <Button type="submit">Register</Button>
+        ) : (
+          <Button type="submit">Login</Button>
+        )}
       </DialogActions>
     </Dialog>
   );

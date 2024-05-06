@@ -1,41 +1,35 @@
-import ContactForm from 'components/ContactForm/ContactForm';
+import ContactForm from './components/ContactForm/ContactForm';
+import Home from './components/Home/Home';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from './components/Filter/Filter';
 import ResponsiveAppBar from './components/NavBar/NavBar';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchContacts } from './redux/operations/operations';
+import { requestCurrentUser } from './redux/operations/operations';
 import { Portal } from '@mui/base/Portal';
 import useAuth from 'components/Hooks/useAuth';
 
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 
 export default function App() {
   const user = useAuth();
-  // const dispatch = useDispatch();
-  // useEffect(
-  //   () =>
-  //     async function fetchData() {
-  //       dispatch(fetchContacts());
-  //     },
-  //   [dispatch]
-  // );
+  // const user = useAuth();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestCurrentUser(user.token));
+  }, []);
+
   return (
     <>
-      <ResponsiveAppBar />
-
-      <div className="mainDiv">
-        {/* <h1>Phonebook</h1> */}
-        {/* <ContactForm /> */}
-        {/* <Filter /> */}
-
-        {user.isLoggedIn && (
-          <>
-            <h1>Contacts</h1> <Contacts />
-          </>
-        )}
-        {!user.isLoggedIn && <h1>Please Autorize to see contacts</h1>}
-      </div>
+      {/* <ResponsiveAppBar /> */}
+      <Routes>
+        <Route path="/" element={<ResponsiveAppBar />}>
+          <Route index element={<Home />} />
+          <Route path="/add" element={<ContactForm />} />
+        </Route>
+      </Routes>
     </>
   );
 }

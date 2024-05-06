@@ -1,8 +1,8 @@
 {
-  "name": "react-homework-template",
+  "name": "goit-react-hw-08-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://goitacademy.github.io/react-homework-template/",
+  "homepage": "https://4lxm4x.github.io/goit-react-hw-08-phonebook/",
   "dependencies": {
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
@@ -15,6 +15,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^9.1.1",
+    "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",

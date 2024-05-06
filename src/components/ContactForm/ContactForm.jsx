@@ -13,7 +13,7 @@ export default function ContactForm() {
   const onHandleFormSubmit = e => {
     e.preventDefault();
     const name = e.target.elements.name.value;
-    const phone = e.target.elements.number.value.replaceAll(' ', '');
+    const number = e.target.elements.number.value.replaceAll(' ', '');
     if (namesInState.includes(name)) {
       Notify.failure('Name already exist');
       e.target.reset();
@@ -21,7 +21,7 @@ export default function ContactForm() {
       dispatch(
         addContact({
           name,
-          phone,
+          number,
         })
       );
       e.target.reset();
