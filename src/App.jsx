@@ -10,6 +10,7 @@ import {
   fetchContacts,
 } from './redux/operations/operations';
 import useAuth from 'components/Hooks/useAuth';
+import { PrivateRoute } from './PrivateRoutes';
 
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
@@ -24,14 +25,20 @@ export default function App() {
     if (user.isLoggedIn) {
       dispatch(fetchContacts());
     }
-  }, []);
+  }, [dispatch, user.isLoggedIn, user.token]);
 
   return (
     <>
       <Routes>
         <Route path="/" element={<ResponsiveAppBar />}>
           <Route index element={<Home />} />
-          <Route path="/add" element={<ContactForm />} />
+
+          <Route
+            path="/add"
+            element={
+              <PrivateRoute component={<ContactForm />} redirectTo="/" />
+            }
+          />
         </Route>
       </Routes>
     </>

@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchContacts } from '../../redux/operations/operations';
 import './Contacts.css';
 
 import { deleteContact } from '../../redux/operations/operations';
-import useAuth from '../../components/Hooks/useAuth';
+// import useAuth from '../../components/Hooks/useAuth';
 
 export default function Contacts() {
   const dispatch = useDispatch();
-  const user = useAuth();
+  // const user = useAuth();
   const contacts = useSelector(state => {
     console.log('🚀 ~ contacts ~ state:', state);
 

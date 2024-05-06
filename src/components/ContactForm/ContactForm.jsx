@@ -1,8 +1,7 @@
 import './ContactForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
-import { useEffect } from 'react';
-import { fetchContacts, addContact } from '../../redux/operations/operations';
+import { addContact } from '../../redux/operations/operations';
 
 export default function ContactForm() {
   const dispatch = useDispatch();

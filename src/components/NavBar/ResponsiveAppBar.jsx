@@ -23,7 +23,7 @@ function ResponsiveAppBar() {
   const dispatch = useDispatch();
   const user = useAuth();
   // console.log('🚀 ~ ResponsiveAppBar ~ user:', user);
-  const pages = ['Add new contact'];
+  const pages = user.isLoggedIn ? ['Add new contact'] : [];
   const [isModalOpen, setModalOpen] = React.useState(false);
   // console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
 
