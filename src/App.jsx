@@ -5,7 +5,10 @@ import Filter from './components/Filter/Filter';
 import ResponsiveAppBar from './components/NavBar/NavBar';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { requestCurrentUser } from './redux/operations/operations';
+import {
+  requestCurrentUser,
+  fetchContacts,
+} from './redux/operations/operations';
 import { Portal } from '@mui/base/Portal';
 import useAuth from 'components/Hooks/useAuth';
 
@@ -19,6 +22,9 @@ export default function App() {
 
   useEffect(() => {
     dispatch(requestCurrentUser(user.token));
+    if (user.isLoggedIn) {
+      dispatch(fetchContacts());
+    }
   }, []);
 
   return (

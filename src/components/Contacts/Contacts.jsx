@@ -17,11 +17,11 @@ export default function Contacts() {
 
   const filter = useSelector(state => state.filter);
 
-  useEffect(() => {
-    if (user.isLoggedIn) {
-      dispatch(fetchContacts());
-    }
-  }, [dispatch, user.isLoggedIn]);
+  // useEffect(() => {
+  //   if (user.isLoggedIn) {
+  //     dispatch(fetchContacts());
+  //   }
+  // }, [dispatch, user.isLoggedIn]);
 
   function onDelete(e) {
     dispatch(deleteContact(e.target.id));
