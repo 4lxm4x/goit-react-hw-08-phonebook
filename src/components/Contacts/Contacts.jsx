@@ -2,11 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import './Contacts.css';
 
 import { deleteContact } from '../../redux/operations/operations';
-// import useAuth from '../../components/Hooks/useAuth';
 
 export default function Contacts() {
   const dispatch = useDispatch();
-  // const user = useAuth();
   const contacts = useSelector(state => {
     console.log('🚀 ~ contacts ~ state:', state);
 
@@ -14,12 +12,6 @@ export default function Contacts() {
   });
 
   const filter = useSelector(state => state.filter);
-
-  // useEffect(() => {
-  //   if (user.isLoggedIn) {
-  //     dispatch(fetchContacts());
-  //   }
-  // }, [dispatch, user.isLoggedIn]);
 
   function onDelete(e) {
     dispatch(deleteContact(e.target.id));
