@@ -6,8 +6,6 @@ import { deleteContact } from '../../redux/operations/operations';
 export default function Contacts() {
   const dispatch = useDispatch();
   const contacts = useSelector(state => {
-    console.log('🚀 ~ contacts ~ state:', state);
-
     return state.contacts.items;
   });
 

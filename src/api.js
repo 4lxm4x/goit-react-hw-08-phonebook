@@ -9,25 +9,36 @@ const unsetToken = () => {
   axios.defaults.headers.common['Authorization'] = '';
 };
 
-export async function fetchAll() {
-  const { data } = await axios.get('/contacts');
-  return data;
+export async function fetchAll(thunkAPI) {
+  try {
+    const { data } = await axios.get('/contacts');
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
 }
 
-export async function addContact(contact) {
-  const { data } = await axios.post('/contacts', contact);
-  return data;
+export async function addContact(contact, thunkAPI) {
+  try {
+    const { data } = await axios.post('/contacts', contact);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
 }
 
-export async function deleteContact(id) {
-  const { data } = await axios.delete(`/contacts/${id}`);
-  return data;
+export async function deleteContact(id, thunkAPI) {
+  try {
+    const { data } = await axios.delete(`/contacts/${id}`);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
 }
 
 export async function register(credentials, thunkAPI) {
   try {
     const { data } = await axios.post('/users/signup', credentials);
-    console.log('🚀 ~ register ~ data :', data);
     setToken(data.token);
     return data;
   } catch (error) {
@@ -42,7 +53,7 @@ export async function login(credentials, thunkAPI) {
     setToken(data.token);
     return data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error.message);
   }
 }
 
@@ -51,7 +62,7 @@ export async function logout(thunkAPI) {
     unsetToken();
     return;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error.message);
   }
 }
 

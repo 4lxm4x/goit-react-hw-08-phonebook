@@ -24,6 +24,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoading = state.name = action.payload.user.name;
         state.email = action.payload.user.email;
+        state.error = '';
       })
       .addCase(registerUser.pending, state => {
         return { ...state, isLoading: true };

@@ -154,8 +154,6 @@ function ResponsiveAppBar() {
                 style={{
                   color: 'inherit',
                   textDecoration: 'none',
-
-                  justifyContent: 'center',
                 }}
               >
                 <Typography
@@ -173,7 +171,7 @@ function ResponsiveAppBar() {
                     textDecoration: 'none',
                   }}
                 >
-                  PHONEBOOK-M
+                  PHONEBOOK
                 </Typography>
               </Link>
             </Box>
