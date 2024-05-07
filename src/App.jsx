@@ -21,11 +21,11 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(requestCurrentUser(user.token));
-    if (user.isLoggedIn) {
+    if (user.token) {
+      dispatch(requestCurrentUser(user.token));
       dispatch(fetchContacts());
     }
-  }, [dispatch, user.isLoggedIn, user.token]);
+  }, [dispatch, user.token]);
 
   return (
     <>

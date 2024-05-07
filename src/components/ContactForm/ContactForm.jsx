@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
 import { addContact } from '../../redux/operations/operations';
 import { Fab, TextField } from '@mui/material';
+import { FormControl } from '@mui/material';
 
 import { Box } from '@mui/system';
 
@@ -50,40 +51,43 @@ export default function ContactForm() {
           '& .MuiTextField-root': { m: 1, width: '25ch' },
         }}
       >
-        <TextField
-          sx={{
-            paddingTop: 1,
-            paddingBottom: 1,
-          }}
-          autoFocus
-          required
-          margin="dense"
-          id="nameField"
-          label="Name"
-          name="name"
-          variant="standard"
-          type="text"
-          onChange={onHandleNameInput}
-        ></TextField>
-        <TextField
-          sx={{
-            paddingTop: 1,
-            paddingBottom: 1,
-          }}
-          autoFocus
-          required
-          margin="dense"
-          id="numberField"
-          label="Number"
-          name="number"
-          variant="standard"
-          type="phone"
-          onChange={onHandleNumberInput}
-        ></TextField>
-
-        <Fab variant="extended" size="medium" color="primary" type="submit">
-          Add contact
-        </Fab>
+        <FormControl variant="outlined">
+          {' '}
+          <TextField
+            sx={{
+              paddingTop: 1,
+              paddingBottom: 1,
+            }}
+            autoFocus
+            required
+            validate
+            margin="dense"
+            id="nameField"
+            label="Name"
+            name="name"
+            variant="standard"
+            type="text"
+            onChange={onHandleNameInput}
+          ></TextField>
+          <TextField
+            sx={{
+              paddingTop: 1,
+              paddingBottom: 1,
+            }}
+            autoFocus
+            required
+            margin="dense"
+            id="numberField"
+            label="Number"
+            name="number"
+            variant="standard"
+            type="tel"
+            onChange={onHandleNumberInput}
+          ></TextField>
+          <Fab variant="extended" size="medium" color="primary" type="submit">
+            Add contact
+          </Fab>
+        </FormControl>
       </Box>
 
       {/* <form action="" className="contactForm" onSubmit={onHandleFormSubmit}>

@@ -15,13 +15,20 @@ import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import useAuth from '../Hooks/useAuth';
 import RegisterForm from 'components/Modal/Modal';
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../redux/slices/authSlice';
+import { logout } from '../../redux/slices/authSlice';
 import { Outlet, Link } from 'react-router-dom';
+import { Badge } from '@mui/material';
 // import { Link } from '@mui/material';
 
 function ResponsiveAppBar() {
   const dispatch = useDispatch();
   const user = useAuth();
+  const userFirstName = () => {
+    const trimmedName = user.name.trim();
+    const spaceIndex = trimmedName.search(' ');
+    return trimmedName.slice(0, spaceIndex);
+  };
+
   // console.log('🚀 ~ ResponsiveAppBar ~ user:', user);
   const pages = user.isLoggedIn ? ['Add new contact'] : [];
   const [isModalOpen, setModalOpen] = React.useState(false);
@@ -67,7 +74,7 @@ function ResponsiveAppBar() {
       handleCloseUserMenu();
     }
     if (event.currentTarget.id === 'Logout') {
-      dispatch(logoutUser());
+      dispatch(logout());
       handleCloseUserMenu();
     }
   };
@@ -129,6 +136,7 @@ function ResponsiveAppBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
+                {/* ============================== */}
                 {pages.map(page => (
                   <MenuItem key={page} onClick={handleNavMenuClick}>
                     <Link
@@ -193,7 +201,15 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Badge
+                    variant="string"
+                    color="white"
+                    max={10}
+                    badgeContent={userFirstName()}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                  >
+                    <Avatar alt={user.name} src="/static/images/avatar/2.jpg" />
+                  </Badge>
                 </IconButton>
               </Tooltip>
               <Menu

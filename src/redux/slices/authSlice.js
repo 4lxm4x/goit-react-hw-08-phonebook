@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from '../initialState';
 import { registerUser, requestCurrentUser } from '../operations/operations';
 import { loginUser } from '../operations/operations';
-import * as API from '../../api';
+import { logoutUser } from '../operations/operations';
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: initialState.user,
   reducers: {
-    logoutUser(state) {
-      API.logout();
+    logout(state) {
+      logoutUser();
       state.isLoggedIn = false;
       state.name = '';
       state.email = '';
@@ -65,5 +65,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { logoutUser } = authSlice.actions;
+export const { logout } = authSlice.actions;
 // export const loginReducer = loginSlice.reducer;

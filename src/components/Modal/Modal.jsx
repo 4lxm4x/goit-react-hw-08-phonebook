@@ -50,7 +50,9 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
         },
       }}
     >
-      <DialogTitle>Register Form</DialogTitle>
+      <DialogTitle>
+        {handleModalOpen === 'Register' ? 'Register Form' : 'Login Form'}
+      </DialogTitle>
       <DialogContent>
         <FormControl size="medium" className="modalForm">
           {handleModalOpen === 'Register' && (
