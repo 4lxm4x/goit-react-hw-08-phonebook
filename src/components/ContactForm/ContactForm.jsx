@@ -1,9 +1,11 @@
 import './ContactForm.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { Notify } from 'notiflix';
+import React from 'react';
+// import { Notify } from 'notiflix';
 import { addContact } from '../../redux/operations/operations';
 import { Fab, TextField } from '@mui/material';
 import { FormControl } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 
 import { Box } from '@mui/system';
 
@@ -12,13 +14,16 @@ export default function ContactForm() {
 
   const contacts = useSelector(state => state.contacts.items);
   const namesInState = contacts.map(contact => contact.name);
+  const [contactAdded, setContactAdded] = React.useState(false);
+  const [failureToAdd, setFailureToAdd] = React.useState(false);
 
   const onHandleFormSubmit = e => {
     e.preventDefault();
     const name = e.target.elements.name.value;
     const number = e.target.elements.number.value.replaceAll(' ', '');
     if (namesInState.includes(name)) {
-      Notify.failure('Name already exist');
+      // Notify.failure('Name already exist');
+      setFailureToAdd(true);
       e.target.reset();
     } else {
       dispatch(
@@ -27,6 +32,7 @@ export default function ContactForm() {
           number,
         })
       );
+      setContactAdded(true);
       e.target.reset();
     }
   };
@@ -89,6 +95,21 @@ export default function ContactForm() {
           </Fab>
         </FormControl>
       </Box>
+      <Snackbar
+        open={contactAdded}
+        // anchorOrigin={{top,center}}
+        autoHideDuration={6000}
+        // onClose={handleClose}
+        message="Contact successfully added"
+        // action={action}
+      />
+      <Snackbar
+        open={failureToAdd}
+        autoHideDuration={6000}
+        // onClose={handleClose}
+        message="Name already exists"
+        // action={action}
+      />
 
       {/* <form action="" className="contactForm" onSubmit={onHandleFormSubmit}>
         <label htmlFor="name">Name</label>
