@@ -2,6 +2,9 @@ import './ContactForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
 import { addContact } from '../../redux/operations/operations';
+import { Fab, TextField } from '@mui/material';
+
+import { Box } from '@mui/system';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -37,8 +40,53 @@ export default function ContactForm() {
 
   return (
     <div>
-      {' '}
-      <form action="" className="contactForm" onSubmit={onHandleFormSubmit}>
+      <Box
+        component="form"
+        onSubmit={onHandleFormSubmit}
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+      >
+        <TextField
+          sx={{
+            paddingTop: 1,
+            paddingBottom: 1,
+          }}
+          autoFocus
+          required
+          margin="dense"
+          id="nameField"
+          label="Name"
+          name="name"
+          variant="standard"
+          type="text"
+          onChange={onHandleNameInput}
+        ></TextField>
+        <TextField
+          sx={{
+            paddingTop: 1,
+            paddingBottom: 1,
+          }}
+          autoFocus
+          required
+          margin="dense"
+          id="numberField"
+          label="Number"
+          name="number"
+          variant="standard"
+          type="phone"
+          onChange={onHandleNumberInput}
+        ></TextField>
+
+        <Fab variant="extended" size="medium" color="primary" type="submit">
+          Add contact
+        </Fab>
+      </Box>
+
+      {/* <form action="" className="contactForm" onSubmit={onHandleFormSubmit}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -62,8 +110,7 @@ export default function ContactForm() {
           required
           onChange={onHandleNumberInput}
         />
-        <button type="submit">Add contact</button>
-      </form>
+      </form> */}
     </div>
   );
 }
