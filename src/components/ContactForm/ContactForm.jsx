@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 // import { Notify } from 'notiflix';
 import { addContact } from '../../redux/operations/operations';
-import { Fab, TextField } from '@mui/material';
-import { FormControl } from '@mui/material';
-import Snackbar from '@mui/material/Snackbar';
+import { Alert, Fab, TextField, Snackbar, FormControl } from '@mui/material';
 
 import { Box } from '@mui/system';
+import { redirect } from 'react-router-dom';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -33,8 +32,10 @@ export default function ContactForm() {
         })
       );
       setContactAdded(true);
+
       e.target.reset();
     }
+    return redirect('/');
   };
 
   const onHandleNameInput = e => {
@@ -58,7 +59,6 @@ export default function ContactForm() {
         }}
       >
         <FormControl variant="outlined">
-          {' '}
           <TextField
             sx={{
               paddingTop: 1,
@@ -97,45 +97,14 @@ export default function ContactForm() {
       </Box>
       <Snackbar
         open={contactAdded}
-        // anchorOrigin={{top,center}}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         autoHideDuration={6000}
-        // onClose={handleClose}
-        message="Contact successfully added"
-        // action={action}
-      />
-      <Snackbar
-        open={failureToAdd}
-        autoHideDuration={6000}
-        // onClose={handleClose}
-        message="Name already exists"
-        // action={action}
-      />
-
-      {/* <form action="" className="contactForm" onSubmit={onHandleFormSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          className="contactInput"
-          placeholder="Plase input your name"
-          name="name"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          onChange={onHandleNameInput}
-        />
-        <label htmlFor="number">Number</label>
-
-        <input
-          type="tel"
-          id="number"
-          className="contactInput"
-          placeholder="Please input your phone number"
-          name="number"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          onChange={onHandleNumberInput}
-        />
-      </form> */}
+      >
+        <Alert severity="success">Contact successfully added</Alert>
+      </Snackbar>
+      <Snackbar open={failureToAdd} autoHideDuration={6000}>
+        <Alert severity="error">Name already exists</Alert>
+      </Snackbar>
     </div>
   );
 }
