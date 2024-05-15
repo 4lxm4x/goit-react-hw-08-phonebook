@@ -1,4 +1,5 @@
 import Contacts from 'components/Contacts/Contacts';
+import ContactsNew from 'components/Contacts/ContactsNew';
 import useAuth from 'components/Hooks/useAuth';
 import './Home.css';
 
@@ -11,7 +12,7 @@ export default function Home() {
         {/* <h1>Phonebook</h1> */}
         {/* <ContactForm /> */}
         {/* <Filter /> */}
-
+        <ContactsNew />
         {user.isLoggedIn && (
           <>
             <h1>Contacts</h1> <Contacts />
