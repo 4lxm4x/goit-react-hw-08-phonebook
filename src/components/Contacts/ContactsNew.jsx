@@ -23,21 +23,10 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from '../../redux/operations/operations';
+import { selectClasses } from '@mui/material';
+import { CleaningServices } from '@mui/icons-material';
 
-function createData(id, name, number) {
-  return {
-    id,
-    name,
-    number,
-  };
-}
-
-const rows = [
-  createData(1, 'Kot', '0674095304'),
-  createData(2, 'Pes', '0503833780'),
-  createData(3, 'Bird', '0639494688'),
-];
-
+let SELECTED_ITEMS = [];
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -112,27 +101,46 @@ function EnhancedTableHead(props) {
             }}
           />
         </TableCell>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
+        {/* {headCells.map(headCell => ( */}
+        <TableCell
+          key={headCells[0].id}
+          align={headCells[0].numeric ? 'right' : 'left'}
+          padding={headCells[0].disablePadding ? 'none' : 'normal'}
+          sortDirection={orderBy === headCells[0].id ? order : false}
+        >
+          <TableSortLabel
+            active={orderBy === headCells[0].id}
+            direction={orderBy === headCells[0].id ? order : 'asc'}
+            onClick={createSortHandler(headCells[0].id)}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {/* {orderBy === headCell.id ? (
+            {headCells[0].label}
+            {/* {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </Box>
               ) : null} */}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+          </TableSortLabel>
+        </TableCell>
+        <TableCell
+          key={headCells[1].id}
+          align="center"
+          padding={headCells[1].disablePadding ? 'none' : 'normal'}
+          sortDirection={orderBy === headCells[1].id ? order : false}
+        >
+          {/* <TableSortLabel
+            active={orderBy === headCells[1].id}
+            direction={orderBy === headCells[1].id ? order : 'asc'}
+            onClick={createSortHandler(headCells[1].id)}
+          > */}
+          {headCells[1].label}
+          {/* {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null} */}
+          {/* </TableSortLabel> */}
+        </TableCell>
+        {/* ))} */}
       </TableRow>
     </TableHead>
   );
@@ -149,6 +157,13 @@ EnhancedTableHead.propTypes = {
 
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
+  const dispatch = useDispatch();
+
+  function onDeleteButtonClick() {
+    // console.log('🚀 ~ onDeleteButtonClick ~ items:', items);
+
+    SELECTED_ITEMS.map(item => dispatch(deleteContact(item)));
+  }
 
   return (
     <Toolbar
@@ -185,7 +200,7 @@ function EnhancedTableToolbar(props) {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Delete" onClick={onDeleteButtonClick}>
           <IconButton>
             <DeleteIcon />
           </IconButton>
@@ -207,11 +222,23 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('name');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const contacts = useSelector(state => {
+    return state.contacts.items;
+  });
+
+  const filter = useSelector(state => state.filter);
+
+  let rows = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter)
+  );
+
+  React.useEffect(() => {}, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -245,6 +272,7 @@ export default function EnhancedTable() {
       );
     }
     setSelected(newSelected);
+    SELECTED_ITEMS = newSelected;
   };
 
   const handleChangePage = (event, newPage) => {
@@ -326,10 +354,7 @@ export default function EnhancedTable() {
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="center">{row.number}</TableCell>
                   </TableRow>
                 );
               })}
