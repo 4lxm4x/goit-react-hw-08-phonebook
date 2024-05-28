@@ -52,7 +52,6 @@ const authSlice = createSlice({
       .addCase(requestCurrentUser.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.isLoading = false;
-        console.log(action.payload);
 
         state.name = action.payload.name;
         state.email = action.payload.email;

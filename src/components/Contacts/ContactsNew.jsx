@@ -101,7 +101,6 @@ function EnhancedTableHead(props) {
             }}
           />
         </TableCell>
-        {/* {headCells.map(headCell => ( */}
         <TableCell
           key={headCells[0].id}
           align={headCells[0].numeric ? 'right' : 'left'}
@@ -114,11 +113,6 @@ function EnhancedTableHead(props) {
             onClick={createSortHandler(headCells[0].id)}
           >
             {headCells[0].label}
-            {/* {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null} */}
           </TableSortLabel>
         </TableCell>
         <TableCell
@@ -127,20 +121,8 @@ function EnhancedTableHead(props) {
           padding={headCells[1].disablePadding ? 'none' : 'normal'}
           sortDirection={orderBy === headCells[1].id ? order : false}
         >
-          {/* <TableSortLabel
-            active={orderBy === headCells[1].id}
-            direction={orderBy === headCells[1].id ? order : 'asc'}
-            onClick={createSortHandler(headCells[1].id)}
-          > */}
           {headCells[1].label}
-          {/* {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null} */}
-          {/* </TableSortLabel> */}
         </TableCell>
-        {/* ))} */}
       </TableRow>
     </TableHead>
   );
@@ -156,13 +138,13 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
   const dispatch = useDispatch();
+  let { numSelected } = props;
+  const [sel, setSel] = React.useState(numSelected);
 
   function onDeleteButtonClick() {
-    // console.log('🚀 ~ onDeleteButtonClick ~ items:', items);
-
     SELECTED_ITEMS.map(item => dispatch(deleteContact(item)));
+    setSel(0);
   }
 
   return (
@@ -238,8 +220,6 @@ export default function EnhancedTable() {
     contact.name.toLowerCase().includes(filter)
   );
 
-  React.useEffect(() => {}, []);
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -300,7 +280,7 @@ export default function EnhancedTable() {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rows, rowsPerPage]
   );
 
   return (
