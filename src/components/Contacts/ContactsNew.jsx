@@ -93,8 +93,8 @@ function EnhancedTableHead(props) {
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
+            indeterminate={SELECTED_ITEMS.length > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && SELECTED_ITEMS.length === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
               'aria-label': 'select all contacts',
@@ -140,11 +140,11 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const dispatch = useDispatch();
   let { numSelected } = props;
-  const [sel, setSel] = React.useState(numSelected);
 
   function onDeleteButtonClick() {
     SELECTED_ITEMS.map(item => dispatch(deleteContact(item)));
-    setSel(0);
+    SELECTED_ITEMS = [];
+    console.log('🚀 ~ onDeleteButtonClick ~ SELECTED_ITEMS:', SELECTED_ITEMS);
   }
 
   return (
@@ -152,7 +152,7 @@ function EnhancedTableToolbar(props) {
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
+        ...(SELECTED_ITEMS.length > 0 && {
           bgcolor: theme =>
             alpha(
               theme.palette.primary.main,
@@ -161,14 +161,14 @@ function EnhancedTableToolbar(props) {
         }),
       }}
     >
-      {numSelected > 0 ? (
+      {SELECTED_ITEMS.length > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
           color="inherit"
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {SELECTED_ITEMS.length} selected
         </Typography>
       ) : (
         <Typography
@@ -181,7 +181,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {SELECTED_ITEMS.length > 0 ? (
         <Tooltip title="Delete" onClick={onDeleteButtonClick}>
           <IconButton>
             <DeleteIcon />
@@ -215,7 +215,6 @@ export default function EnhancedTable() {
   });
 
   const filter = useSelector(state => state.filter);
-
   let rows = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter)
   );
@@ -230,9 +229,11 @@ export default function EnhancedTable() {
     if (event.target.checked) {
       const newSelected = rows.map(n => n.id);
       setSelected(newSelected);
+      SELECTED_ITEMS = newSelected;
       return;
     }
     setSelected([]);
+    SELECTED_ITEMS = [];
   };
 
   const handleClick = (event, id) => {
@@ -253,6 +254,7 @@ export default function EnhancedTable() {
     }
     setSelected(newSelected);
     SELECTED_ITEMS = newSelected;
+    console.log('🚀 ~ handleClick ~ SELECTED_ITEMS:', SELECTED_ITEMS);
   };
 
   const handleChangePage = (event, newPage) => {
