@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Filter from 'components/Filter/Filter';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -139,12 +140,22 @@ EnhancedTableHead.propTypes = {
 
 function EnhancedTableToolbar(props) {
   const dispatch = useDispatch();
-  let { numSelected } = props;
+  const [filterVisible, setFilterVisible] = React.useState(false);
+  // let { numSelected } = props;
 
   function onDeleteButtonClick() {
     SELECTED_ITEMS.map(item => dispatch(deleteContact(item)));
     SELECTED_ITEMS = [];
     console.log('🚀 ~ onDeleteButtonClick ~ SELECTED_ITEMS:', SELECTED_ITEMS);
+  }
+
+  function showFilterInput(prop) {
+    setFilterVisible(prop);
+  }
+
+  function checkVisibility(some) {
+    console.log('🚀 ~ checkVisibility ~ prop:', some);
+    setFilterVisible(some);
   }
 
   return (
@@ -188,11 +199,17 @@ function EnhancedTableToolbar(props) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <div>
+          {filterVisible ? (
+            <Filter prop={checkVisibility} />
+          ) : (
+            <Tooltip title="Filter list">
+              <IconButton onClick={showFilterInput}>
+                <FilterListIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
       )}
     </Toolbar>
   );
