@@ -2,14 +2,14 @@ import ContactForm from './components/ContactForm/ContactForm';
 import Home from './components/Home/Home';
 // import Contacts from 'components/Contacts/Contacts';
 // import Filter from './components/Filter/Filter';
-import ResponsiveAppBar from './components/NavBar/ResponsiveAppBar';
+import NavBar from './components/NavBar/NavBar';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   requestCurrentUser,
   fetchContacts,
 } from './redux/operations/operations';
-import useAuth from 'components/Hooks/useAuth';
+import useAuth from './redux/Hooks/useAuth';
 import { PrivateRoute } from './PrivateRoutes';
 
 import './App.css';
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<ResponsiveAppBar />}>
+        <Route path="/" element={<NavBar />}>
           <Route index element={<Home />} />
 
           <Route

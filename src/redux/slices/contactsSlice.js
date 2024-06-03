@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from '../initialState';
+import { Notify } from 'notiflix';
 
 import {
   fetchContacts,
   addContact,
   deleteContact,
 } from '../operations/operations';
+
+Notify.init({
+  position: 'left-bottom',
+});
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -29,6 +34,7 @@ const contactsSlice = createSlice({
         return { ...state, isLoading: true };
       })
       .addCase(addContact.fulfilled, (state, action) => {
+        Notify.success('Contact successfully added');
         return {
           ...state,
           isLoading: false,
@@ -42,6 +48,7 @@ const contactsSlice = createSlice({
         return { ...state, isLoading: true };
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
+        Notify.info('Successfully deleted');
         return {
           ...state,
           isLoading: false,
@@ -51,6 +58,11 @@ const contactsSlice = createSlice({
         };
       })
       .addCase(deleteContact.rejected, (state, action) => {
+        const error = action.payload;
+
+        if (error.response.status === 500) {
+          Notify.failure('Server error. Try again later');
+        }
         return { ...state, isLoading: false, error: action.payload };
       });
   },

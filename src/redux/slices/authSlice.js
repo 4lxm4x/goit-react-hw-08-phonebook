@@ -3,6 +3,9 @@ import { initialState } from '../initialState';
 import { registerUser, requestCurrentUser } from '../operations/operations';
 import { loginUser } from '../operations/operations';
 import { logoutUser } from '../operations/operations';
+import { Notify } from 'notiflix';
+
+Notify.init({ position: 'left-bottom' });
 
 const authSlice = createSlice({
   name: 'auth',
@@ -30,6 +33,11 @@ const authSlice = createSlice({
         return { ...state, isLoading: true };
       })
       .addCase(registerUser.rejected, (state, action) => {
+        const error = action.payload;
+
+        if (error.response.status === 500) {
+          Notify.failure('Server error. Try again later');
+        }
         return { ...state, isLoading: false, error: action.payload };
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -39,12 +47,20 @@ const authSlice = createSlice({
         state.name = action.payload.user.name;
         state.email = action.payload.user.email;
         state.error = '';
+        Notify.success('Login success');
       })
       .addCase(loginUser.pending, state => {
         return { ...state, isLoading: true };
       })
       .addCase(loginUser.rejected, (state, action) => {
-        return { ...state, isLoading: false, error: action.payload };
+        const error = action.payload;
+        if (error.response.status === 400) {
+          Notify.failure('Wrong name or password');
+        }
+        if (error.response.status === 500) {
+          Notify.failure('Server error. Try again later');
+        }
+        return { ...state, isLoading: false, error: error };
       })
       .addCase(requestCurrentUser.pending, (state, action) => {
         return { ...state, isLoading: true };
@@ -58,11 +74,17 @@ const authSlice = createSlice({
         state.error = '';
       })
       .addCase(requestCurrentUser.rejected, (state, action) => {
-        return { ...state, isLoading: false, error: action.payload };
+        const error = action.payload;
+        if (error.response.status === 400) {
+          Notify.failure('Wrong name or password');
+        }
+        if (error.response.status === 500) {
+          Notify.failure('Server error. Try again later');
+        }
+        return { ...state, isLoading: false, error: error };
       });
   },
 });
 
 export const authReducer = authSlice.reducer;
 export const { logout } = authSlice.actions;
-// export const loginReducer = loginSlice.reducer;

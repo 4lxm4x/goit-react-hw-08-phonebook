@@ -1,5 +1,5 @@
-import ContactsNew from 'components/Contacts/ContactsNew';
-import useAuth from 'components/Hooks/useAuth';
+import Contacts from 'components/Contacts/Contacts';
+import useAuth from '../../redux/Hooks/useAuth';
 import './Home.css';
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <div className="mainDiv">
         {user.isLoggedIn && (
           <>
-            <ContactsNew />
+            <Contacts />
           </>
         )}
         {!user.isLoggedIn && <h1>Please Autorize to see contacts</h1>}

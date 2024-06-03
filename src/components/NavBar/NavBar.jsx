@@ -12,13 +12,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
-import useAuth from '../Hooks/useAuth';
+import useAuth from '../../redux/Hooks/useAuth';
 import RegisterForm from 'components/Modal/Modal';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/slices/authSlice';
 import { Outlet, Link } from 'react-router-dom';
 import { Badge } from '@mui/material';
-// import { Link } from '@mui/material';
 
 function ResponsiveAppBar() {
   const dispatch = useDispatch();
@@ -29,14 +28,12 @@ function ResponsiveAppBar() {
     return trimmedName.slice(0, spaceIndex);
   };
 
-  // console.log('🚀 ~ ResponsiveAppBar ~ user:', user);
   const pages = user.isLoggedIn ? ['Add new contact'] : [];
   const [isModalOpen, setModalOpen] = React.useState(false);
-  // console.log('🚀 ~ ResponsiveAppBar ~ isModalOpen:', isModalOpen);
 
   const settings = user.isLoggedIn
-    ? ['Account', 'Logout']
-    : ['Account', 'Login', 'Register'];
+    ? ['Account (underDev)', 'Logout']
+    : ['Account(underDev)', 'Login', 'Register'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -56,7 +53,6 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseUserMenu = e => {
-    // console.dir('current', e.currentTarget);
     setAnchorElUser(null);
   };
 
@@ -91,13 +87,12 @@ function ResponsiveAppBar() {
             <Typography
               variant="h6"
               noWrap
-              // component="a"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: 'monospace',
                 fontWeight: 700,
-                letterSpacing: '.3rem',
+                letterSpacing: '.2rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
@@ -149,12 +144,17 @@ function ResponsiveAppBar() {
                 ))}
               </Menu>
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'flex', md: 'none', textAlign: 'center' },
+              }}
+            >
               <ContactPhoneIcon
                 sx={{
-                  display: { xs: 'flex', md: 'none' },
+                  display: { xs: 'flex', md: 'none', textAlign: 'center' },
                   mr: 1,
-                  pt: 2,
+                  pt: 0.5,
                 }}
               />
               <Link
@@ -165,12 +165,12 @@ function ResponsiveAppBar() {
                 }}
               >
                 <Typography
-                  variant="h3"
+                  variant="h5"
                   noWrap
-                  // component="a"
                   sx={{
                     mr: 2,
                     display: { xs: 'flex', md: 'none' },
+                    textAlign: 'center',
                     flexGrow: 1,
                     fontFamily: 'monospace',
                     fontWeight: 700,

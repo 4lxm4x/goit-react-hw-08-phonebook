@@ -10,7 +10,6 @@ import DialogContent from '@mui/material/DialogContent';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/operations/operations';
 import { loginUser } from '../../redux/operations/operations';
-// import useAuth from 'components/Hooks/useAuth';
 
 export default function RegisterForm({ handleModalOpen, handleModalClose }) {
   const [open, setOpen] = useState(false);
@@ -24,11 +23,6 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
     if (handleModalOpen === 'Login' || handleModalOpen === 'Register')
       setOpen(true);
   }, [handleModalOpen]);
-
-  // const user = useAuth();
-  // useEffect(() => {
-  //   user.isLoggedIn ? setOpen(false) : setOpen(true);
-  // }, [user.isLoggedIn]);
 
   const dispatch = useDispatch();
 
