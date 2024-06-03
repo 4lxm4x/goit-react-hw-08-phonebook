@@ -70,7 +70,6 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
               paddingTop: 1,
               paddingBottom: 1,
             }}
-            autoFocus
             required
             margin="dense"
             id="emailField"
@@ -90,7 +89,6 @@ export default function RegisterForm({ handleModalOpen, handleModalClose }) {
             label="Password"
             variant="standard"
             type="password"
-            autoFocus
             required
             margin="dense"
           ></TextField>
