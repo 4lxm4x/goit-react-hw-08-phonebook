@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
 import './Filter.css';
 import { filter } from '../../redux/slices/filterSlice';
@@ -8,7 +8,10 @@ import FormControl from '@mui/material/FormControl';
 
 const Filter = ({ prop }) => {
   const dispatch = useDispatch();
+  const filterInput = useSelector(state => state.filter);
+  console.log('🚀 ~ Filter ~ filterInput:', filterInput);
   const [visible, setVisible] = useState(true);
+
   console.log('🚀 ~ Filter ~ visible:', visible);
 
   prop(visible);
@@ -22,6 +25,7 @@ const Filter = ({ prop }) => {
   const onInput = e => {
     dispatch(filter(e.target.value.toLowerCase()));
   };
+
   return (
     <>
       {/* <input
@@ -46,10 +50,11 @@ const Filter = ({ prop }) => {
           onBlur={() => {
             setVisible(false);
           }}
-          onFocus={() => {
+          onFocus={e => {
+            e.target.value = filterInput;
             setVisible(true);
           }}
-        />
+        ></Input>
       </FormControl>
     </>
   );
