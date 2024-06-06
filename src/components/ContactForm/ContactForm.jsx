@@ -1,16 +1,18 @@
 import './ContactForm.css';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+import React, { useState } from 'react';
 import { Notify } from 'notiflix';
 import { addContact } from '../../redux/operations/operations';
-import { Fab, TextField, FormControl } from '@mui/material';
-
+import { Fab, Input, FormControl } from '@mui/material';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [phone, setPhone] = useState();
   Notify.init({ position: 'left-bottom' });
 
   const contacts = useSelector(state => state.contacts.items);
@@ -19,7 +21,8 @@ export default function ContactForm() {
   const onHandleFormSubmit = e => {
     e.preventDefault();
     const name = e.target.elements.name.value;
-    const number = e.target.elements.number.value.replaceAll(' ', '');
+    const number = phone.replaceAll(' ', '');
+
     if (namesInState.includes(name)) {
       Notify.failure('Name already exist');
       e.target.reset();
@@ -41,10 +44,6 @@ export default function ContactForm() {
     return e.target.value;
   };
 
-  const onHandleNumberInput = e => {
-    return e.target.value;
-  };
-
   return (
     <div>
       <Box
@@ -58,35 +57,46 @@ export default function ContactForm() {
         }}
       >
         <FormControl variant="outlined">
-          <TextField
+          <Input
             sx={{
               paddingTop: 1,
-              paddingBottom: 1,
+              paddingBottom: 0,
+              marginBottom: '10px',
             }}
             autoFocus
             required
-            margin="dense"
+            placeholder="Name"
             id="nameField"
             label="Name"
             name="name"
             variant="standard"
             type="text"
-            onChange={onHandleNameInput}
-          ></TextField>
-          <TextField
-            sx={{
-              paddingTop: 1,
-              paddingBottom: 1,
+            inputProps={{
+              pattern: '[A-Za-z ]+',
             }}
-            required
+            onChange={onHandleNameInput}
+          ></Input>
+          <PhoneInput
+            containerStyle={{
+              marginBottom: '10px',
+              border: 'none',
+            }}
+            inputStyle={{
+              border: 'none',
+              borderBottom: '1px solid grey',
+              borderRadius: '0px',
+              width: 'inherit',
+            }}
+            onlyCountries={['ua']}
+            placeholder="+380 (##) ### ## ##"
+            disableDropdown
+            country={'ua'}
             margin="dense"
             id="numberField"
-            label="Number"
             name="number"
-            variant="standard"
             type="tel"
-            onChange={onHandleNumberInput}
-          ></TextField>
+            onChange={phone => setPhone(phone)}
+          ></PhoneInput>
           <Fab variant="extended" size="medium" color="primary" type="submit">
             Add contact
           </Fab>

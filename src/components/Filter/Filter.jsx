@@ -20,26 +20,24 @@ const Filter = ({ prop }) => {
   };
 
   return (
-    <>
-      <FormControl variant="outlined">
-        <Input
-          type="text"
-          autoFocus
-          className="filter"
-          name="filter"
-          variant="standard"
-          placeholder="Search contact name"
-          onChange={onInput}
-          onBlur={() => {
-            setVisible(false);
-          }}
-          onFocus={e => {
-            e.target.value = filterInput;
-            setVisible(true);
-          }}
-        ></Input>
-      </FormControl>
-    </>
+    <FormControl variant="outlined">
+      <Input
+        type="text"
+        autoFocus
+        className="filter"
+        name="filter"
+        variant="standard"
+        placeholder="Search contact name"
+        onChange={onInput}
+        onBlur={() => {
+          setVisible(false);
+        }}
+        onFocus={e => {
+          e.target.value = filterInput;
+          setVisible(true);
+        }}
+      ></Input>
+    </FormControl>
   );
 };
 
