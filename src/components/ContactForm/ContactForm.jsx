@@ -80,12 +80,14 @@ export default function ContactForm() {
             containerStyle={{
               marginBottom: '10px',
               border: 'none',
+              borderBottom: '1px solid grey',
             }}
+            buttonStyle={{ backgroundColor: '#fff', border: 'none' }}
             inputStyle={{
               border: 'none',
-              borderBottom: '1px solid grey',
               borderRadius: '0px',
               width: 'inherit',
+              backgrouncColor: 'red',
             }}
             onlyCountries={['ua']}
             placeholder="+380 (##) ### ## ##"
